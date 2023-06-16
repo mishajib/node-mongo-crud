@@ -8,6 +8,7 @@
 
 ## Database setup
 
+- Make `.env` file from `.env.example` file.
 - Change the database URL from `.env` file.
 - Now you are ready to go.
 

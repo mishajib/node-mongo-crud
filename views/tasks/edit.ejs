@@ -1,0 +1,76 @@
+<%- contentFor('styles') %>
+<!-- Styles -->
+
+<%- contentFor('body') %>
+
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">Edit Task</h4>
+  </div>
+
+  <!-- Show single error message -->
+  <% if (errorMsg) { %>
+  <div class="alert alert-danger" role="alert"><%= errorMsg %></div>
+  <% } %>
+
+  <!-- Show success message -->
+  <% if (successMsg) { %>
+  <div class="alert alert-success" role="alert"><%= successMsg %></div>
+  <% } %>
+
+  <form action="/tasks/<%= task.id %>?_method=PUT" method="POST">
+    <div class="card-body">
+      <div class="form-group mb-3">
+        <label for="title" class="form-label"> Title </label>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          class="form-control <%= validationErrors.title ? 'is-invalid' : '' %>"
+          placeholder="Enter title"
+          value="<%= inputValues.title || task.title %>"
+          required
+          autofocus
+        />
+        <% if (validationErrors.title) { %>
+        <div class="invalid-feedback"><%= validationErrors.title %></div>
+        <% } %>
+      </div>
+
+      <div class="form-group">
+        <label for="description" class="form-label"> Description </label>
+        <textarea
+          name="description"
+          id="description"
+          cols="30"
+          rows="10"
+          class="form-control <%= validationErrors.description ? 'is-invalid' : '' %>"
+          placeholder="Enter description"
+          required
+        >
+<%= inputValues.description || task.description %></textarea
+        >
+        <% if (validationErrors.description) { %>
+        <div class="invalid-feedback"><%= validationErrors.description %></div>
+        <% } %>
+      </div>
+    </div>
+    <div class="card-footer">
+      <p class="text-end">
+        <a href="/tasks" class="btn btn-danger">
+          <i class="fas fa-close"></i>
+          Cancel
+        </a>
+        <button class="btn btn-primary">
+          Update
+          <i class="fas fa-sync"></i>
+        </button>
+      </p>
+    </div>
+  </form>
+</div>
+
+<!-- body content end -->
+
+<%- contentFor('scripts') %>
+<!-- Scripts -->

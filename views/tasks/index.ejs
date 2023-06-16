@@ -1,0 +1,129 @@
+<%- contentFor('styles') %>
+<!-- Styles -->
+
+<%- contentFor('body') %>
+
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">
+      Task List
+
+      <a href="/tasks/create" class="btn btn-primary float-end ms-2">
+        Add Task
+        <i class="fas fa-plus"></i>
+      </a>
+    </h4>
+  </div>
+  <div class="card-body">
+    <% if (successMsg) { %>
+    <div class="alert alert-success" role="alert"><%= successMsg %></div>
+    <% } %>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>SL#</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Created At</th>
+            <th>Updated At</th>
+            <th class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (tasks.length) { %> <% tasks.forEach((task, index) => { %>
+          <tr>
+            <!-- correct serial with pagination-->
+            <td>
+              <%= (pagination.currentPage - 1) * pagination.pageSize + index + 1
+              %>
+            </td>
+            <td><%= task.title %></td>
+            <td><%= task.description %></td>
+            <td><%= formatDate(task.createdAt) %></td>
+            <td><%= formatDate(task.updatedAt) %></td>
+            <td class="text-center">
+              <a
+                href="/tasks/<%= task.id %>/edit"
+                class="btn btn-sm btn-warning"
+                title="Edit task"
+              >
+                <i class="fas fa-edit"></i>
+              </a>
+              <a
+                href="/tasks/<%= task.id %>"
+                class="btn btn-sm btn-info"
+                title="View task details"
+              >
+                <i class="fas fa-eye"></i>
+              </a>
+              <!--                                        add confirmation-->
+              <form
+                action="/tasks/<%= task.id %>?_method=DELETE"
+                method="POST"
+                style="display: inline-block"
+              >
+                <button
+                  type="submit"
+                  class="btn btn-sm btn-danger"
+                  title="Delete task"
+                  onclick="return confirm('Are you sure to delete?')"
+                >
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          <% }) %> <% } else { %>
+          <tr>
+            <td class="text-center" colspan="100%">No tasks found!</td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+
+      <% if (pagination.totalPages > 1) { %>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <% if (pagination.currentPage > 1) { %>
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="/tasks?page=<%= pagination.currentPage - 1 %>"
+              aria-label="Previous"
+            >
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <% } %> <% for(let i = 1; i <= pagination.totalPages; i++) { %>
+          <li
+            class="page-item <%= i === pagination.currentPage ? 'active' : '' %>"
+          >
+            <a class="page-link" href="/tasks?page=<%= i %>"><%= i %></a>
+          </li>
+          <% } %> <% if (pagination.currentPage < pagination.totalPages) { %>
+          <li class="page-item">
+            <a
+              class="page-link"
+              href="/tasks?page=<%= pagination.currentPage + 1 %>"
+              aria-label="Next"
+            >
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+          <% } %>
+        </ul>
+      </nav>
+      <% } %>
+      <span
+        >Page <%= pagination.currentPage %> of <%= pagination.totalPages
+        %></span
+      >
+    </div>
+  </div>
+</div>
+
+<!-- body content end -->
+
+<%- contentFor('scripts') %>
+<!-- Scripts -->

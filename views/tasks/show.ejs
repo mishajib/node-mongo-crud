@@ -1,0 +1,58 @@
+<%- contentFor('styles') %>
+<!-- Styles -->
+
+<%- contentFor('body') %>
+
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title text-center">Task Details</h4>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover text-center">
+        <tr>
+          <th>Title</th>
+          <th><%= task.title %></th>
+        </tr>
+        <tr>
+          <th>Description</th>
+          <th><%= task.description %></th>
+        </tr>
+        <tr>
+          <th>Created At</th>
+          <th><%= formatDate(task.createdAt) %></th>
+        </tr>
+        <tr>
+          <th>Updated At</th>
+          <th><%= formatDate(task.updatedAt) %></th>
+        </tr>
+      </table>
+
+      <div class="text-center">
+        <a href="/tasks/<%= task.id %>/edit" class="btn btn-warning">
+          <i class="fas fa-edit"></i>
+          Edit
+        </a>
+        <form
+          action="/tasks/<%= task.id %>?_method=DELETE"
+          method="POST"
+          style="display: inline-block"
+        >
+          <button
+            type="submit"
+            class="btn btn-danger"
+            onclick="return confirm('Are you sure to delete?')"
+          >
+            Delete
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- body content end -->
+
+<%- contentFor('scripts') %>
+<!-- Scripts -->

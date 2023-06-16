@@ -1,0 +1,76 @@
+<%- contentFor('styles') %>
+<!-- Styles -->
+
+<%- contentFor('body') %>
+
+<div class="card">
+  <div class="card-header">
+    <h4 class="card-title">Add New Task</h4>
+  </div>
+
+  <!-- Show single error message -->
+  <% if (errorMsg) { %>
+  <div class="alert alert-danger" role="alert"><%= errorMsg %></div>
+  <% } %>
+
+  <!-- Show success message -->
+  <% if (successMsg) { %>
+  <div class="alert alert-success" role="alert"><%= successMsg %></div>
+  <% } %>
+
+  <form action="/tasks" method="POST">
+    <div class="card-body">
+      <div class="form-group mb-3">
+        <label for="title" class="form-label"> Title </label>
+        <input
+          type="text"
+          name="title"
+          id="title"
+          class="form-control <%= validationErrors.title ? 'is-invalid' : '' %>"
+          placeholder="Enter title"
+          value="<%= inputValues.title || '' %>"
+          required
+          autofocus
+        />
+        <% if (validationErrors.title) { %>
+        <div class="invalid-feedback"><%= validationErrors.title %></div>
+        <% } %>
+      </div>
+
+      <div class="form-group">
+        <label for="description" class="form-label"> Description </label>
+        <textarea
+          name="description"
+          id="description"
+          cols="30"
+          rows="10"
+          class="form-control <%= validationErrors.description ? 'is-invalid' : '' %>"
+          placeholder="Enter description"
+          required
+        >
+<%= inputValues.description || '' %></textarea
+        >
+        <% if (validationErrors.description) { %>
+        <div class="invalid-feedback"><%= validationErrors.description %></div>
+        <% } %>
+      </div>
+    </div>
+    <div class="card-footer">
+      <p class="text-end">
+        <a href="/tasks" class="btn btn-danger">
+          <i class="fas fa-close"></i>
+          Cancel
+        </a>
+        <button class="btn btn-primary">
+          Save
+          <i class="fas fa-save"></i>
+        </button>
+      </p>
+    </div>
+  </form>
+</div>
+
+<!-- body content end -->
+
+<%- contentFor('scripts') %>
+<!-- Scripts -->
